@@ -1,9 +1,13 @@
 plugins {
+    id 'org.springframework.boot' version '2.4.2'
     id 'java'
 }
 
 group 'github.drewlakee'
 version '1.0.0'
+
+sourceCompatibility = JavaVersion.VERSION_14
+targetCompatibility = JavaVersion.VERSION_14
 
 repositories {
     mavenCentral()
@@ -14,6 +18,12 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+bootJar {
+    manifest {
+        attributes 'Start-Class': 'github.drewlakee.FibonacciApplication'
+    }
 }
 
 test {

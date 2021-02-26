@@ -18,8 +18,8 @@ public class FibonacciApplication {
     }
 
     @Async("workersExecutor")
-    @GetMapping(path = "/compute/{value}")
+    @GetMapping(path = "/compute/{value}", produces="application/json")
     public CompletableFuture<String> computeFibonacciValue(@PathVariable int value) {
-     return CompletableFuture.completedFuture(new FibonacciValue(value).compute().toString());
+     return CompletableFuture.completedFuture(String.format("{\"result\":%s}", new FibonacciValue(value).compute().toString()));
     }
 }
