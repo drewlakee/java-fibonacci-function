@@ -2,11 +2,14 @@ package github.drewlakee;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Controller;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.util.concurrent.CompletableFuture;
+
+@RestController
 @SpringBootApplication
 public class FibonacciApplication {
 
@@ -14,8 +17,9 @@ public class FibonacciApplication {
         SpringApplication.run(FibonacciApplication.class, args);
     }
 
+    @Async("workersExecutor")
     @GetMapping(path = "/compute/{value}")
-    public void computeFibonacciValue(@PathVariable long value) {
-        System.out.println("Client want's to compute " + value);
+    public CompletableFuture<String> computeFibonacciValue(@PathVariable int value) {
+     return CompletableFuture.completedFuture(new FibonacciValue(value).compute().toString());
     }
 }
