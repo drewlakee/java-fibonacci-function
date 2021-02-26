@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigInteger;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -20,6 +22,14 @@ public class FibonacciApplication {
     @Async("workersExecutor")
     @GetMapping(path = "/compute/{value}", produces="application/json")
     public CompletableFuture<String> computeFibonacciValue(@PathVariable int value) {
-     return CompletableFuture.completedFuture(String.format("{\"result\":%s}", new FibonacciValue(value).compute().toString()));
+        List<BigInteger> computeResult = new FibonacciValue(value).compute();
+        StringBuilder responseBuilder = new StringBuilder();
+        responseBuilder.append(computeResult.get(0));
+        if (computeResult.size() > 1) {
+            for (int index = 1; index < computeResult.size(); index++) {
+                responseBuilder.append(",").append(computeResult.get(index));
+            }
+        }
+        return CompletableFuture.completedFuture(String.format("{\"result\":[%s]}", responseBuilder.toString()));
     }
 }

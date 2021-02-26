@@ -17,13 +17,13 @@ docker run -p 8080:8080 jff:1.0.0
 4. Test
 
 ```
-curl -x GET 0.0.0.0:8080/compute/100
+curl -x GET 0.0.0.0:8080/compute/10
 ```
 
 Response:
 
 ```json
 {
-  "result" : 354224848179261900000
+  "result" : [1,1,2,3,5,8,13,21,34,55]
 }
 ```

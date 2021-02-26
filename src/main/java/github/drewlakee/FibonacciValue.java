@@ -1,29 +1,31 @@
 package github.drewlakee;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class FibonacciValue {
 
     private final int value;
-    private BigInteger result;
+    private List<BigInteger> result;
 
     public FibonacciValue(int valueToCompute) {
         this.value = valueToCompute;
     }
 
-    public BigInteger compute() {
-        if (value <= 0) return BigInteger.ZERO;
-        if (value == 1 || value == 2) return BigInteger.ONE;
+    public List<BigInteger> compute() {
+        if (value <= 0) return List.of(BigInteger.ZERO);
+        if (value == 1 || value == 2) return List.of(BigInteger.ONE);
         if (result != null) return result;
 
-        BigInteger[] arr = new BigInteger[value];
-        arr[0] = BigInteger.ONE;
-        arr[1] = BigInteger.ONE;
+        ArrayList<BigInteger> arr = new ArrayList<>(value);
+        arr.add(0, BigInteger.ONE);
+        arr.add(1, BigInteger.ONE);
         for (int i = 2; i < value; i++) {
-            arr[i] = arr[i - 2].add(arr[i - 1]);
+            arr.add(i, arr.get(i - 2).add(arr.get(i - 1)));
         }
-        result = arr[value - 1];
+        result = arr;
 
         return result;
     }
